@@ -81,48 +81,55 @@ public struct Stepper {
         self.maximumValue = maximumValue
         self.stepValue = stepValue
         self.value = (minimumValue...maximumValue).contains(value) ?
-        minimumValue : value
+        value : minimumValue
     }
 }
 
 extension Stepper: View {
     /// :nodoc:
     public var body: some View {
-        HStack(spacing: 0) {
-            generateButton(buttonType: .decrement) {
-                valueObserver.value -= stepValue
-                updateCurrentValue(newValue: valueObserver.value)
+            HStack(spacing: 0) {
+                getDecrementButton()
+                getTextView()
+                getIncrementButton()
             }
-
-            TextStyleLabel(getValueText(), typography: appearance.textStyle.typography) { label in
-                label.textAlignment = .center
-            }.frame(minWidth: minimumSize.width, idealWidth: minimumSize.height)
-
-            generateButton(buttonType: .increment) {
-                valueObserver.value += stepValue
-                updateCurrentValue(newValue: valueObserver.value)
-            }
-        }
-        .background(
-            Capsule()
-                .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
-                .background(Capsule().foregroundColor(Color(appearance.backgroundColor)))
-        )
+            .background(
+                Capsule()
+                    .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+                    .background(Capsule().foregroundColor(Color(appearance.backgroundColor)))
+            )
     }
 
-    func generateButton(
-        buttonType: ButtonType,
-        action: @escaping () -> Void
-    ) -> some View {
-        let button = Button(action: action) {
-            switch buttonType {
-            case .increment:
-                getIncrementImage()
-            case .decrement:
-                getImageForDecrementButton()
-            }
+    @ViewBuilder
+    func getIncrementButton() -> some View {
+        Button { buttonAction(buttonType: .increment) } label: {
+            getIncrementImage()
         }
-        return button.frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
+        .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
+        .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
+        .accessibilityHint(StepperControl.Strings.stepperButtonA11yHint.localized)
+    }
+
+    @ViewBuilder
+    func getDecrementButton() -> some View {
+        Button { buttonAction(buttonType: .decrement) } label: {
+            getImageForDecrementButton()
+        }
+        .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
+        .accessibilityLabel(StepperControl.Strings.decrementA11yButton.localized)
+        .accessibilityHint(StepperControl.Strings.stepperButtonA11yHint.localized)
+    }
+
+    func getTextView() -> some View {
+        let stringSize = getStringSize()
+        return TextStyleLabel(
+            getValueText(),
+            typography: appearance.textStyle.typography
+        ) { label in
+            label.textAlignment = .center
+        }
+            .frame(minWidth: stringSize.width, minHeight: stringSize.height)
+            .accessibilityLabel(StepperControl.Strings.valueA11yLabel.localized)
     }
 }
 
@@ -141,22 +148,43 @@ extension Stepper {
         }
         delegate?.valueDidChange(newValue: valueObserver.value)
     }
+
+    func buttonAction(buttonType: ButtonType) {
+        switch buttonType {
+        case .increment:
+            valueObserver.value += stepValue
+        case .decrement:
+            valueObserver.value -= stepValue
+        }
+        updateCurrentValue(newValue: valueObserver.value)
+    }
+
+    func getStringSize() -> CGSize {
+        let textlabelLayout = appearance.textStyle.typography.generateLayout(compatibleWith: nil)
+        let stringSize = "\(maximumValue)".sizeOfString(usingFont: textlabelLayout.font)
+        return stringSize
+    }
 }
 
 extension Stepper {
-    func getDeleteImage() -> Image {
-        Image(uiImage: appearance.deleteImage ?? StepperControl.Appearance.defaultDeleteImage)
+    func getDeleteImage() -> Image? {
+        if let image = appearance.deleteImage {
+            return Image(uiImage: image)
+        }
+        return nil
     }
 
+    @ViewBuilder
     func getIncrementImage() -> Image {
-        Image(uiImage: appearance.incrementImage ?? StepperControl.Appearance.defaultIncrementImage)
+        Image(uiImage: appearance.incrementImage)
     }
 
+    @ViewBuilder
     func getDecrementImage() -> Image {
-        Image(uiImage: appearance.decrementImage ?? StepperControl.Appearance.defaultDecrementImage)
+        Image(uiImage: appearance.decrementImage)
     }
 
-    func getImageForDecrementButton() -> Image {
+    func getImageForDecrementButton() -> Image? {
         if appearance.hasDeleteButton
             && value <= stepValue
             && minimumValue == 0 {
@@ -193,7 +221,7 @@ struct Stepper_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             Spacer().frame(maxWidth: .infinity)
-            Stepper()
+            Stepper(maximumValue: 10000, stepValue: 200, value: 99)
             Spacer().frame(maxWidth: .infinity)
         }
     }

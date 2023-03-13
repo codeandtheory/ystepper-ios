@@ -11,9 +11,9 @@ import YCoreUI
 
 /// Collection of Images
 enum Images: String, CaseIterable {
-    case increment = "plus.circle"
-    case decrement = "minus.circle"
-    case delete = "trash.circle"
+    case increment = "plus"
+    case decrement = "minus"
+    case delete = "trash"
 }
 
 extension Images: ImageAsset {
