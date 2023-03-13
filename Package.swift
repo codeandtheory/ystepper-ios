@@ -17,15 +17,17 @@ let package = Package(
         )
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        // For UI layout support, contrast ratio calculations.
+        .package(url: "https://github.com/yml-org/YCoreUI.git", from: "1.4.0"),
+        // For Typography support
+        .package(url: "https://github.com/yml-org/YMatterType.git", from: "1.4.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "YStepper",
-            dependencies: []
+            dependencies: ["YCoreUI", "YMatterType"]
         ),
         .testTarget(
             name: "YStepperTests",
