@@ -123,7 +123,7 @@ final class StepperTests: XCTestCase {
     }
 
     func testImageUpdate() {
-        var sut = makeSUT(appearance: StepperControl.Appearance(deleteImage: Images.decrement.image))
+        var sut = makeSUT(appearance: StepperControl.Appearance(deleteImage: StepperControl.Images.decrement.image))
         let deleteImage = sut.getDeleteImage()
         let decrementImage = sut.getDecrementImage()
         XCTAssertEqual(sut.value, sut.minimumValue)
@@ -154,6 +154,14 @@ final class StepperTests: XCTestCase {
 
     func testPreviewNotNil() {
         XCTAssertNotNil(Stepper_Previews.previews)
+    }
+
+    func testGetAccessibilityText() {
+        var sut = makeSUT()
+        XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.deleteA11yButton.localized)
+
+        sut.appearance.deleteImage = nil
+        XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.decrementA11yButton.localized)
     }
 }
 

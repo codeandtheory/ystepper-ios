@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         // For UI layout support, contrast ratio calculations.
-        .package(url: "https://github.com/yml-org/YCoreUI.git", from: "1.4.0"),
+        .package(url: "https://github.com/yml-org/YCoreUI.git", from: "1.5.0"),
         // For Typography support
         .package(url: "https://github.com/yml-org/YMatterType.git", from: "1.4.0")
     ],

@@ -94,7 +94,7 @@ extension Stepper: View {
                 getTextView()
                 getIncrementButton()
             }
-            .frame(minWidth: 88+getStringSize().width*scale)
+            .frame(minWidth: (2*minimumSize.width) + (getStringSize().width * scale))
             .background(
                 Capsule()
                     .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
@@ -109,7 +109,6 @@ extension Stepper: View {
         }
         .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
-        .accessibilityHint(StepperControl.Strings.stepperButtonA11yHint.localized)
     }
 
     @ViewBuilder
@@ -118,8 +117,7 @@ extension Stepper: View {
             getImageForDecrementButton()
         }
         .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
-        .accessibilityLabel(StepperControl.Strings.decrementA11yButton.localized)
-        .accessibilityHint(StepperControl.Strings.stepperButtonA11yHint.localized)
+        .accessibilityLabel(getAccessibilityText())
     }
 
     func getTextView() -> some View {
@@ -129,6 +127,7 @@ extension Stepper: View {
             typography: appearance.textStyle.typography
         ) { label in
             label.textAlignment = .center
+            label.numberOfLines = 1
         }
             .frame(minWidth: stringSize.width, minHeight: stringSize.height)
             .accessibilityLabel(StepperControl.Strings.valueA11yLabel.localized)
@@ -138,6 +137,15 @@ extension Stepper: View {
 extension Stepper {
     func getValueText() -> String {
         String(format: "%.\(decimalPlaces)f", value)
+    }
+
+    func getAccessibilityText() -> String {
+        if appearance.hasDeleteButton
+            && value <= stepValue
+            && minimumValue == 0 {
+            return StepperControl.Strings.deleteA11yButton.localized
+        }
+        return StepperControl.Strings.decrementA11yButton.localized
     }
 
     func updateCurrentValue(newValue: Double) {
@@ -162,8 +170,9 @@ extension Stepper {
     }
 
     func getStringSize() -> CGSize {
-        let textlabelLayout = appearance.textStyle.typography.generateLayout(compatibleWith: nil)
-        let stringSize = "\(value)".sizeOfString(usingFont: textlabelLayout.font)
+        let layout = appearance.textStyle.typography.generateLayout(compatibleWith: nil)
+        let rawSize = "\(value)".sizeOfString(usingFont: layout.font)
+        let stringSize = CGSize(width: rawSize.width, height: max(rawSize.height, layout.lineHeight))
         return stringSize
     }
 }
@@ -223,7 +232,7 @@ struct Stepper_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             Spacer().frame(maxWidth: .infinity)
-            Stepper(maximumValue: 10000, stepValue: 200, value: 99)
+            Stepper()
             Spacer().frame(maxWidth: .infinity)
         }
     }

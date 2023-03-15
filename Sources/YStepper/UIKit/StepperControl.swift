@@ -81,6 +81,24 @@ public class StepperControl: UIControl {
     }
 }
 
+extension StepperControl {
+    /// Collection of Images
+    enum Images: String, CaseIterable, SystemImage {
+        case increment = "plus"
+        case decrement = "minus"
+        case delete = "trash"
+    }
+    /// Collection of Strings
+    enum Strings: String, Localizable, CaseIterable {
+        case incrementA11yButton = "Increment_Button_A11y_label"
+        case decrementA11yButton = "Decrement_Button_A11y_label"
+        case deleteA11yButton = "Delete_Button_A11y_label"
+        case valueA11yLabel = "Value_A11y_label"
+
+        static var bundle: Bundle { .module }
+    }
+}
+
 extension StepperControl: StepperDelegate {
     /// This method is used to inform when there is a change in value.
     /// - Parameter value: new value

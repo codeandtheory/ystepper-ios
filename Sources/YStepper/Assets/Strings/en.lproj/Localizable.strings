@@ -8,5 +8,5 @@
 
 "Increment_Button_A11y_label" = "Increment";
 "Decrement_Button_A11y_label" = "Decrement";
+"Delete_Button_A11y_label" = "Delete";
 "Value_A11y_label" = "Current value";
-"Stepper_Button_A11y_Hint" = "Double tap to select.";
