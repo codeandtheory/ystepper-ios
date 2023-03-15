@@ -131,7 +131,7 @@ extension Stepper: View {
             label.numberOfLines = 1
         }
         .frame(width: getStringSize(sizeCategory).width)
-        .accessibilityLabel(StepperControl.Strings.valueA11yLabel.localized)
+        .accessibilityLabel(getAccessibilityLabelText())
     }
 }
 
@@ -188,6 +188,10 @@ extension Stepper {
             width: max(valueSize.width, maxSize.width),
             height: max(valueSize.height, layout.lineHeight)
         )
+    }
+
+    func getAccessibilityLabelText() -> String {
+        StepperControl.Strings.valueA11yLabel.localized + getValueText()
     }
 }
 
