@@ -40,7 +40,6 @@ extension StepperControl {
         ///   - deleteImage: Delete button image. Default is `Appearance.defaultDeleteImage`
         ///   - incrementImage: Increment button image. Default is `Appearance.defaultIncrementImage`
         ///   - decrementImage: Decrement button image. Default is `Appearance.defaultDecrementImage`
-        ///   - hasDeleteButton: Show delete image. Degault is `false`
         public init(
             textStyle: (textColor: UIColor, typography: Typography) = (.label, .systemLabel),
             foregroundColor: UIColor = .label,
