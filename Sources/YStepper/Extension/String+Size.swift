@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import YCoreUI
 
 extension String {
-    func sizeOfString(usingFont font: UIFont) -> CGSize {
+    func size(withFont font: UIFont) -> CGSize {
         let fontAttributes = [NSAttributedString.Key.font: font]
-        return self.size(withAttributes: fontAttributes)
+        let size = size(withAttributes: fontAttributes)
+        return CGSize(width: size.width.ceiled(), height: size.height.ceiled())
     }
 }
