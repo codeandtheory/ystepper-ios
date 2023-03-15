@@ -16,6 +16,7 @@ public struct Stepper {
         case decrement
     }
 
+    @ScaledMetric var scale = 1.0
     let minimumSize: CGSize = CGSize(width: 44, height: 44)
 
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
@@ -93,6 +94,7 @@ extension Stepper: View {
                 getTextView()
                 getIncrementButton()
             }
+            .frame(minWidth: 88+getStringSize().width*scale)
             .background(
                 Capsule()
                     .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
@@ -161,7 +163,7 @@ extension Stepper {
 
     func getStringSize() -> CGSize {
         let textlabelLayout = appearance.textStyle.typography.generateLayout(compatibleWith: nil)
-        let stringSize = "\(maximumValue)".sizeOfString(usingFont: textlabelLayout.font)
+        let stringSize = "\(value)".sizeOfString(usingFont: textlabelLayout.font)
         return stringSize
     }
 }
