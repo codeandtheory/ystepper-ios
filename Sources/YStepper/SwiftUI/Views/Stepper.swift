@@ -105,7 +105,7 @@ extension Stepper: View {
     @ViewBuilder
     func getIncrementButton() -> some View {
         Button { buttonAction(buttonType: .increment) } label: {
-            getIncrementImage()
+            getIncrementImage().renderingMode(.template).foregroundColor(Color(appearance.textStyle.textColor))
         }
         .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
@@ -114,7 +114,9 @@ extension Stepper: View {
     @ViewBuilder
     func getDecrementButton() -> some View {
         Button { buttonAction(buttonType: .decrement) } label: {
-            getImageForDecrementButton()
+            getImageForDecrementButton()?.renderingMode(.template).foregroundColor(
+                Color(appearance.textStyle.textColor)
+            )
         }
         .frame(minWidth: minimumSize.width, minHeight: minimumSize.height)
         .accessibilityLabel(getAccessibilityText())
