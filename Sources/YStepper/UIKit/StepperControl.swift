@@ -88,6 +88,7 @@ extension StepperControl {
         case decrement = "minus"
         case delete = "trash"
     }
+    
     /// Collection of Strings
     enum Strings: String, Localizable, CaseIterable {
         case incrementA11yButton = "Increment_Button_A11y_label"

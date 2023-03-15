@@ -94,7 +94,7 @@ extension Stepper: View {
                 getTextView()
                 getIncrementButton()
             }
-            .frame(minWidth: (2*minimumSize.width) + (getStringSize().width * scale))
+            .frame(minWidth: (2 * minimumSize.width) + (getStringSize().width * scale))
             .background(
                 Capsule()
                     .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
