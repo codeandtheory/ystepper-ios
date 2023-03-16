@@ -20,12 +20,12 @@ extension StepperControl {
         public var borderColor: UIColor
         /// Border width for stepper view
         public var borderWidth: CGFloat
-        /// Delete button image
+        /// Delete button image. Nil means no delete button
         public var deleteImage: UIImage?
         /// Increment button image
-        public var incrementImage: UIImage?
+        public var incrementImage: UIImage
         /// Decrement button image
-        public var decrementImage: UIImage?
+        public var decrementImage: UIImage
         /// Whether to show delete button or not.
         var hasDeleteButton: Bool { deleteImage != nil }
 
@@ -47,8 +47,8 @@ extension StepperControl {
             borderColor: UIColor = .label,
             borderWidth: CGFloat = 1.0,
             deleteImage: UIImage? = Appearance.defaultDeleteImage,
-            incrementImage: UIImage? = Appearance.defaultIncrementImage,
-            decrementImage: UIImage? = Appearance.defaultDecrementImage
+            incrementImage: UIImage = Appearance.defaultIncrementImage,
+            decrementImage: UIImage = Appearance.defaultDecrementImage
         ) {
             self.textStyle = textStyle
             self.backgroundColor = backgroundColor
@@ -64,10 +64,10 @@ extension StepperControl {
 extension StepperControl.Appearance {
     ///  Default stepper appearance
     public static let `default` = StepperControl.Appearance()
-    /// Default image for delete button. Is a `trash.circle` from SF Symbols in template rendering mode
-    public static let defaultDeleteImage = Images.delete.image
-    /// Default image for increment button. Is a `plus.circle` from SF Symbols in template rendering mode
-    public static let defaultIncrementImage = Images.increment.image
-    /// Default image for decrement button. Is a `minus.circle` from SF Symbols in template rendering mode
-    public static let defaultDecrementImage = Images.decrement.image
+    /// Default image for delete button. Is a `trash` from SF Symbols in template rendering mode
+    public static let defaultDeleteImage = StepperControl.Images.delete.image
+    /// Default image for increment button. Is a `plus` from SF Symbols in template rendering mode
+    public static let defaultIncrementImage = StepperControl.Images.increment.image
+    /// Default image for decrement button. Is a `minus` from SF Symbols in template rendering mode
+    public static let defaultDecrementImage = StepperControl.Images.decrement.image
 }

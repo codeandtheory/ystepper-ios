@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  YStepper
+
+  Created by Sahil on 9/03/23.
+  Copyright © 2023 Y Media Labs. All rights reserved.
+*/
+
+"Increment_Button_A11y_label" = "Increment";
+"Decrement_Button_A11y_label" = "Decrement";
+"Delete_Button_A11y_label" = "Delete";
+"Value_A11y_label" = "Current value";
