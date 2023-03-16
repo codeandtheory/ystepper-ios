@@ -13,6 +13,7 @@ import YMatterType
 public struct Stepper {
     @Environment(\.sizeCategory) var sizeCategory
     let buttonSize: CGSize = CGSize(width: 44, height: 44)
+    @ScaledMetric var scale = 1.0
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
 
@@ -96,16 +97,15 @@ extension Stepper: View {
         }
         .frame(width: (2 * buttonSize.width) + getStringSize(sizeCategory).width)
         .background(
-            Capsule()
-                .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
-                .background(Capsule().foregroundColor(Color(appearance.backgroundColor)))
+            getShape()
+                .background(getShapeWithoutStroke().foregroundColor(Color(appearance.backgroundColor)))
         )
     }
 
     @ViewBuilder
     func getIncrementButton() -> some View {
         Button { buttonAction(buttonType: .increment) } label: {
-            getIncrementImage().renderingMode(.template).foregroundColor(Color(appearance.textStyle.textColor))
+            getIncrementImage().renderingMode(.template)
         }
         .frame(width: buttonSize.width, height: buttonSize.height)
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
@@ -114,9 +114,7 @@ extension Stepper: View {
     @ViewBuilder
     func getDecrementButton() -> some View {
         Button { buttonAction(buttonType: .decrement) } label: {
-            getImageForDecrementButton()?.renderingMode(.template).foregroundColor(
-                Color(appearance.textStyle.textColor)
-            )
+            getImageForDecrementButton()?.renderingMode(.template)
         }
         .frame(width: buttonSize.width, height: buttonSize.height)
         .accessibilityLabel(getAccessibilityText())
@@ -129,9 +127,62 @@ extension Stepper: View {
         ) { label in
             label.textAlignment = .center
             label.numberOfLines = 1
+            label.textColor = appearance.textStyle.textColor
         }
         .frame(width: getStringSize(sizeCategory).width)
         .accessibilityLabel(getAccessibilityLabelText())
+    }
+
+    @ViewBuilder
+    func getShape() -> some View {
+        switch appearance.shape {
+        case .none:
+            EmptyView()
+        case .rectangle:
+            Rectangle().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .roundRect(cornerRadius: let cornerRadius):
+            RoundedRectangle(
+                cornerSize: CGSize(
+                    width: cornerRadius,
+                    height: cornerRadius
+                )
+            ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .scaledRoundRect(cornerRadius: let cornerRadius):
+                RoundedRectangle(
+                    cornerSize: CGSize(
+                        width: cornerRadius * scale,
+                        height: cornerRadius * scale
+                    )
+                ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .capsule:
+            Capsule().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        }
+    }
+
+    @ViewBuilder
+    func getShapeWithoutStroke() -> some View {
+        switch appearance.shape {
+        case .none:
+            EmptyView()
+        case .rectangle:
+            Rectangle()
+        case .roundRect(cornerRadius: let cornerRadius):
+            RoundedRectangle(
+                cornerSize: CGSize(
+                    width: cornerRadius,
+                    height: cornerRadius
+                )
+            )
+        case .scaledRoundRect(cornerRadius: let cornerRadius):
+                RoundedRectangle(
+                    cornerSize: CGSize(
+                        width: cornerRadius * scale,
+                        height: cornerRadius * scale
+                    )
+                )
+        case .capsule:
+            Capsule()
+        }
     }
 }
 
