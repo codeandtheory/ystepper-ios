@@ -152,6 +152,66 @@ final class StepperTests: XCTestCase {
         XCTAssertNotNil(button)
     }
 
+    func testShapesNotNill() {
+        var expectedAppearance = StepperControl.Appearance(shape: .rectangle)
+        var sut = makeSUT(appearance: expectedAppearance)
+        let rectShape = sut.getShape()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(rectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .roundRect(cornerRadius: 10))
+        sut.appearance = expectedAppearance
+        let roundedRectShape = sut.getShape()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(roundedRectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .capsule)
+        sut.appearance = expectedAppearance
+        let capsuleShape = sut.getShape()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(capsuleShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .none)
+        sut.appearance = expectedAppearance
+        let emptyView = sut.getShape()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(emptyView)
+    }
+
+    func testShapesWithoutStrokeNotNill() {
+        var expectedAppearance = StepperControl.Appearance(shape: .rectangle)
+        var sut = makeSUT(appearance: expectedAppearance)
+        let rectShape = sut.getShapeWithoutStroke()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(rectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .roundRect(cornerRadius: 10))
+        sut.appearance = expectedAppearance
+        let roundedRectShape = sut.getShapeWithoutStroke()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(roundedRectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .capsule)
+        sut.appearance = expectedAppearance
+        let capsuleShape = sut.getShapeWithoutStroke()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(capsuleShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .none)
+        sut.appearance = expectedAppearance
+        let emptyView = sut.getShapeWithoutStroke()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(emptyView)
+    }
+
     func testPreviewNotNil() {
         XCTAssertNotNil(Stepper_Previews.previews)
     }

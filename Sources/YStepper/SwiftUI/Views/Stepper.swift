@@ -13,6 +13,7 @@ import YMatterType
 public struct Stepper {
     @Environment(\.sizeCategory) var sizeCategory
     let buttonSize: CGSize = CGSize(width: 44, height: 44)
+
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
 
@@ -96,9 +97,8 @@ extension Stepper: View {
         }
         .frame(width: (2 * buttonSize.width) + getStringSize(sizeCategory).width)
         .background(
-            Capsule()
-                .strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
-                .background(Capsule().foregroundColor(Color(appearance.backgroundColor)))
+            getShape()
+                .background(getShapeWithoutStroke().foregroundColor(Color(appearance.backgroundColor)))
         )
     }
 
@@ -132,6 +132,44 @@ extension Stepper: View {
         }
         .frame(width: getStringSize(sizeCategory).width)
         .accessibilityLabel(getAccessibilityLabelText())
+    }
+
+    @ViewBuilder
+    func getShape() -> some View {
+        switch appearance.shape {
+        case .none:
+            EmptyView()
+        case .rectangle:
+            Rectangle().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .roundRect(cornerRadius: let cornerRadius):
+            RoundedRectangle(
+                cornerSize: CGSize(
+                    width: cornerRadius,
+                    height: cornerRadius
+                )
+            ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .capsule:
+            Capsule().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        }
+    }
+
+    @ViewBuilder
+    func getShapeWithoutStroke() -> some View {
+        switch appearance.shape {
+        case .none:
+            EmptyView()
+        case .rectangle:
+            Rectangle()
+        case .roundRect(cornerRadius: let cornerRadius):
+            RoundedRectangle(
+                cornerSize: CGSize(
+                    width: cornerRadius,
+                    height: cornerRadius
+                )
+            )
+        case .capsule:
+            Capsule()
+        }
     }
 }
 
