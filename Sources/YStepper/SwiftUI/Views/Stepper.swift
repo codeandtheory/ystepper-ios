@@ -151,10 +151,10 @@ extension Stepper: View {
         case .scaledRoundRect(cornerRadius: let cornerRadius):
                 RoundedRectangle(
                     cornerSize: CGSize(
-                        width: cornerRadius*scale,
-                        height: cornerRadius*scale
+                        width: cornerRadius * scale,
+                        height: cornerRadius * scale
                     )
-                ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth*scale)
+                ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
         case .capsule:
             Capsule().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
         }
@@ -177,8 +177,8 @@ extension Stepper: View {
         case .scaledRoundRect(cornerRadius: let cornerRadius):
                 RoundedRectangle(
                     cornerSize: CGSize(
-                        width: cornerRadius*scale,
-                        height: cornerRadius*scale
+                        width: cornerRadius * scale,
+                        height: cornerRadius * scale
                     )
                 )
         case .capsule:
