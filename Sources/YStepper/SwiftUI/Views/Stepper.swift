@@ -13,7 +13,7 @@ import YMatterType
 public struct Stepper {
     @Environment(\.sizeCategory) var sizeCategory
     let buttonSize: CGSize = CGSize(width: 44, height: 44)
-
+    @ScaledMetric var scale = 1.0
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
 
@@ -148,6 +148,13 @@ extension Stepper: View {
                     height: cornerRadius
                 )
             ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
+        case .scaledRoundRect(cornerRadius: let cornerRadius):
+                RoundedRectangle(
+                    cornerSize: CGSize(
+                        width: cornerRadius*scale,
+                        height: cornerRadius*scale
+                    )
+                ).strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth*scale)
         case .capsule:
             Capsule().strokeBorder(Color(appearance.borderColor), lineWidth: appearance.borderWidth)
         }
@@ -167,6 +174,13 @@ extension Stepper: View {
                     height: cornerRadius
                 )
             )
+        case .scaledRoundRect(cornerRadius: let cornerRadius):
+                RoundedRectangle(
+                    cornerSize: CGSize(
+                        width: cornerRadius*scale,
+                        height: cornerRadius*scale
+                    )
+                )
         case .capsule:
             Capsule()
         }

@@ -17,6 +17,8 @@ extension StepperControl.Appearance {
         case rectangle
         /// Rounded rectangle.
         case roundRect(cornerRadius: CGFloat)
+        /// Rounded rectangle that scales with Dynamic Type.
+        case scaledRoundRect(cornerRadius: CGFloat)
         /// Capsule.
         case capsule
     }

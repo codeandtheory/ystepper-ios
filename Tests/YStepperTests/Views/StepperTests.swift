@@ -145,14 +145,14 @@ final class StepperTests: XCTestCase {
         XCTAssertEqual(sut.value, sut.minimumValue)
     }
 
-    func testBackgroundNotNill() {
+    func testBackgroundNotNil() {
         let sut = makeSUT()
         let button = sut.getDecrementButton()
 
         XCTAssertNotNil(button)
     }
 
-    func testShapesNotNill() {
+    func testShapesNotNil() {
         var expectedAppearance = StepperControl.Appearance(shape: .rectangle)
         var sut = makeSUT(appearance: expectedAppearance)
         let rectShape = sut.getShape()
@@ -166,6 +166,13 @@ final class StepperTests: XCTestCase {
 
         XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
         XCTAssertNotNil(roundedRectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .scaledRoundRect(cornerRadius: 10))
+        sut.appearance = expectedAppearance
+        let scaledRoundRect = sut.getShape()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(scaledRoundRect)
 
         expectedAppearance = StepperControl.Appearance(shape: .capsule)
         sut.appearance = expectedAppearance
@@ -182,7 +189,7 @@ final class StepperTests: XCTestCase {
         XCTAssertNotNil(emptyView)
     }
 
-    func testShapesWithoutStrokeNotNill() {
+    func testShapesWithoutStrokeNotNil() {
         var expectedAppearance = StepperControl.Appearance(shape: .rectangle)
         var sut = makeSUT(appearance: expectedAppearance)
         let rectShape = sut.getShapeWithoutStroke()
@@ -196,6 +203,13 @@ final class StepperTests: XCTestCase {
 
         XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
         XCTAssertNotNil(roundedRectShape)
+
+        expectedAppearance = StepperControl.Appearance(shape: .scaledRoundRect(cornerRadius: 10))
+        sut.appearance = expectedAppearance
+        let scaledRoundRect = sut.getShapeWithoutStroke()
+
+        XCTAssertEqual(sut.appearance.shape, expectedAppearance.shape)
+        XCTAssertNotNil(scaledRoundRect)
 
         expectedAppearance = StepperControl.Appearance(shape: .capsule)
         sut.appearance = expectedAppearance
