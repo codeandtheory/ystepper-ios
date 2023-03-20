@@ -20,16 +20,16 @@ extension StepperControl {
         public var borderColor: UIColor
         /// Border width for stepper view
         public var borderWidth: CGFloat
-        /// Delete button image. Nil means no delete button
-        public var deleteImage: UIImage?
+        /// Delete button image
+        public var deleteImage: UIImage
         /// Increment button image
         public var incrementImage: UIImage
         /// Decrement button image
         public var decrementImage: UIImage
         /// Stepper's layout properties such as spacing between views. Default is `.default`
         public var layout: Layout
-        /// Whether to show delete button or not
-        var hasDeleteButton: Bool { deleteImage != nil }
+        /// Whether to show delete image or not
+        var showDeleteImage: Bool
 
         /// Initializer for appearance
         /// - Parameters:
@@ -39,30 +39,36 @@ extension StepperControl {
         ///   - backgroundColor: Background color for stepper view. Default is `.systemBackground`
         ///   - borderColor: Border color for stepper view. Default is `UIColor.label`
         ///   - borderWidth: Border width for day view. Default is `1.0`
-        ///   - deleteImage: Delete button image. Default is `Appearance.defaultDeleteImage`
-        ///   - incrementImage: Increment button image. Default is `Appearance.defaultIncrementImage`
-        ///   - decrementImage: Decrement button image. Default is `Appearance.defaultDecrementImage`
+        ///   - deleteImage: Delete button image. Default is `nil`.
+        ///   Nil means using `Appearance.defaultDeleteImage`
+        ///   - incrementImage: Increment button image. Default is `nil`
+        ///   Nil means using `Appearance.defaultIncrementImage`
+        ///   - decrementImage: Decrement button image. Default is `nil`
+        ///   Nil means using `Appearance.defaultDecrementImage`
         ///   - layout: Stepper's layout properties like spacing between views
-        
+        ///   - showDeleteImage: Whether to show delete button or not. Default is`true`
+
         public init(
             textStyle: (textColor: UIColor, typography: Typography) = (.label, .systemLabel),
             foregroundColor: UIColor = .label,
             backgroundColor: UIColor = .systemBackground,
             borderColor: UIColor = .label,
             borderWidth: CGFloat = 1.0,
-            deleteImage: UIImage? = Appearance.defaultDeleteImage,
-            incrementImage: UIImage = Appearance.defaultIncrementImage,
-            decrementImage: UIImage = Appearance.defaultDecrementImage,
-            layout: Layout = .default
+            deleteImage: UIImage? = nil,
+            incrementImage: UIImage? = nil,
+            decrementImage: UIImage? = nil,
+            layout: Layout = .default,
+            showDeleteImage: Bool = true
         ) {
             self.textStyle = textStyle
             self.backgroundColor = backgroundColor
             self.borderColor = borderColor
             self.borderWidth = borderWidth
-            self.deleteImage = deleteImage
-            self.incrementImage = incrementImage
-            self.decrementImage = decrementImage
+            self.deleteImage = deleteImage ?? Appearance.defaultDeleteImage
+            self.incrementImage = incrementImage ?? Appearance.defaultIncrementImage
+            self.decrementImage = decrementImage ?? Appearance.defaultDecrementImage
             self.layout = layout
+            self.showDeleteImage = showDeleteImage
         }
     }
 }

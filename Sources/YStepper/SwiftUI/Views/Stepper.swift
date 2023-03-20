@@ -17,6 +17,13 @@ public struct Stepper {
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
 
+    var isIncrementDisabled: Bool {
+        value >= maximumValue
+    }
+    var isDecrmentDisabled: Bool {
+        value <= minimumValue
+    }
+    
     /// Receive value change notification
     public weak var delegate: StepperDelegate?
 
@@ -106,16 +113,26 @@ extension Stepper: View {
     func getIncrementButton() -> some View {
         Button { buttonAction(buttonType: .increment) } label: {
             getIncrementImage().renderingMode(.template)
+                .foregroundColor(
+                    isIncrementDisabled ?
+                    Color(appearance.textStyle.textColor).opacity(0.5) : Color(appearance.textStyle.textColor)
+                )
         }
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
+        .disabled(isIncrementDisabled)
     }
 
     @ViewBuilder
     func getDecrementButton() -> some View {
         Button { buttonAction(buttonType: .decrement) } label: {
             getImageForDecrementButton()?.renderingMode(.template)
+                .foregroundColor(
+                    isDecrmentDisabled ?
+                    Color(appearance.textStyle.textColor).opacity(0.5) : Color(appearance.textStyle.textColor)
+                )
         }
         .accessibilityLabel(getAccessibilityText())
+        .disabled(isDecrmentDisabled)
     }
 
     func getTextView() -> some View {
@@ -130,7 +147,7 @@ extension Stepper: View {
         .frame(width: getStringSize(sizeCategory).width)
         .accessibilityLabel(getAccessibilityLabelText())
     }
-
+    
     @ViewBuilder
     func getShape() -> some View {
         switch appearance.layout.shape {
@@ -199,7 +216,7 @@ extension Stepper {
     }
 
     func getAccessibilityText() -> String {
-        if appearance.hasDeleteButton
+        if appearance.showDeleteImage
             && value <= stepValue
             && minimumValue == 0 {
             return StepperControl.Strings.deleteA11yButton.localized
@@ -245,11 +262,8 @@ extension Stepper {
 }
 
 extension Stepper {
-    func getDeleteImage() -> Image? {
-        if let image = appearance.deleteImage {
-            return Image(uiImage: image)
-        }
-        return nil
+    func getDeleteImage() -> Image {
+            Image(uiImage: appearance.deleteImage)
     }
 
     @ViewBuilder
@@ -263,7 +277,7 @@ extension Stepper {
     }
 
     func getImageForDecrementButton() -> Image? {
-        if appearance.hasDeleteButton
+        if appearance.showDeleteImage
             && value <= stepValue
             && minimumValue == 0 {
             return getDeleteImage()

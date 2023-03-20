@@ -95,7 +95,9 @@ final class StepperTests: XCTestCase {
 
     func testImagesShouldNotBeNil() {
         let sut = makeSUT(appearance: StepperControl.Appearance(
-            deleteImage: StepperControl.Appearance.defaultDeleteImage
+            deleteImage: nil,
+            incrementImage: nil,
+            decrementImage: nil
         ))
 
         XCTAssertNotNil(sut.getIncrementImage())
@@ -103,13 +105,10 @@ final class StepperTests: XCTestCase {
         XCTAssertNotNil(sut.getDeleteImage())
     }
 
-    func testDeleteImageShouldBeNil() {
-        let sut = makeSUT(appearance: StepperControl.Appearance(deleteImage: nil))
-        XCTAssertNil(sut.getDeleteImage())
-
-        let decrementImage = sut.getDecrementImage()
-
-        XCTAssertEqual(decrementImage, sut.getImageForDecrementButton())
+    func testDecrementImageshouldNotReturnDeleteImage() {
+        let sut = makeSUT(appearance: StepperControl.Appearance(showDeleteImage: false))
+        let decrementImage = sut.getDeleteImage()
+        XCTAssertNotEqual(decrementImage, sut.getImageForDecrementButton())
     }
 
     func testValueGreaterThanMaxValue() {
@@ -131,9 +130,6 @@ final class StepperTests: XCTestCase {
 
         sut.value = sut.stepValue
         XCTAssertEqual(sut.getImageForDecrementButton(), deleteImage)
-
-        sut.appearance.deleteImage = nil
-        XCTAssertEqual(sut.getImageForDecrementButton(), decrementImage)
     }
 
     func testButtonAction() {
@@ -143,13 +139,6 @@ final class StepperTests: XCTestCase {
         XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
         sut.buttonAction(buttonType: .decrement)
         XCTAssertEqual(sut.value, sut.minimumValue)
-    }
-
-    func testBackgroundNotNil() {
-        let sut = makeSUT()
-        let button = sut.getDecrementButton()
-
-        XCTAssertNotNil(button)
     }
 
     func testShapesNotNil() {
@@ -242,7 +231,7 @@ final class StepperTests: XCTestCase {
         var sut = makeSUT()
         XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.deleteA11yButton.localized)
 
-        sut.appearance.deleteImage = nil
+        sut.appearance.showDeleteImage = false
         XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.decrementA11yButton.localized)
     }
 }
