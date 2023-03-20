@@ -26,9 +26,9 @@ extension StepperControl {
         public var incrementImage: UIImage
         /// Decrement button image
         public var decrementImage: UIImage
-        /// Stepper's shape
-        public var shape: Shape
-        /// Whether to show delete button or not.
+        /// Stepper's layout properties such as spacing between views. Default is `.default`
+        public var layout: Layout
+        /// Whether to show delete button or not
         var hasDeleteButton: Bool { deleteImage != nil }
 
         /// Initializer for appearance
@@ -42,7 +42,7 @@ extension StepperControl {
         ///   - deleteImage: Delete button image. Default is `Appearance.defaultDeleteImage`
         ///   - incrementImage: Increment button image. Default is `Appearance.defaultIncrementImage`
         ///   - decrementImage: Decrement button image. Default is `Appearance.defaultDecrementImage`
-        ///   - shape: Stepper's shape. Default is `.capsule`
+        ///   - layout: Stepper's layout properties like spacing between views
         
         public init(
             textStyle: (textColor: UIColor, typography: Typography) = (.label, .systemLabel),
@@ -53,7 +53,7 @@ extension StepperControl {
             deleteImage: UIImage? = Appearance.defaultDeleteImage,
             incrementImage: UIImage = Appearance.defaultIncrementImage,
             decrementImage: UIImage = Appearance.defaultDecrementImage,
-            shape: Shape = .capsule
+            layout: Layout = .default
         ) {
             self.textStyle = textStyle
             self.backgroundColor = backgroundColor
@@ -62,7 +62,7 @@ extension StepperControl {
             self.deleteImage = deleteImage
             self.incrementImage = incrementImage
             self.decrementImage = decrementImage
-            self.shape = shape
+            self.layout = layout
         }
     }
 }

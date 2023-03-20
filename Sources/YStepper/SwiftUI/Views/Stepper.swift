@@ -12,7 +12,7 @@ import YMatterType
 /// A SwiftUI stepper control.
 public struct Stepper {
     @Environment(\.sizeCategory) var sizeCategory
-    let buttonSize: CGSize = CGSize(width: 44, height: 44)
+
     @ScaledMetric var scale = 1.0
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
@@ -90,12 +90,12 @@ public struct Stepper {
 extension Stepper: View {
     /// :nodoc:
     public var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: appearance.layout.gap) {
             getDecrementButton()
             getTextView()
             getIncrementButton()
         }
-        .frame(width: (2 * buttonSize.width) + getStringSize(sizeCategory).width)
+        .padding(EdgeInsets(appearance.layout.contentInset))
         .background(
             getShape()
                 .background(getShapeWithoutStroke().foregroundColor(Color(appearance.backgroundColor)))
@@ -107,7 +107,6 @@ extension Stepper: View {
         Button { buttonAction(buttonType: .increment) } label: {
             getIncrementImage().renderingMode(.template)
         }
-        .frame(width: buttonSize.width, height: buttonSize.height)
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
     }
 
@@ -116,7 +115,6 @@ extension Stepper: View {
         Button { buttonAction(buttonType: .decrement) } label: {
             getImageForDecrementButton()?.renderingMode(.template)
         }
-        .frame(width: buttonSize.width, height: buttonSize.height)
         .accessibilityLabel(getAccessibilityText())
     }
 
@@ -135,7 +133,7 @@ extension Stepper: View {
 
     @ViewBuilder
     func getShape() -> some View {
-        switch appearance.shape {
+        switch appearance.layout.shape {
         case .none:
             EmptyView()
         case .rectangle:
@@ -161,7 +159,7 @@ extension Stepper: View {
 
     @ViewBuilder
     func getShapeWithoutStroke() -> some View {
-        switch appearance.shape {
+        switch appearance.layout.shape {
         case .none:
             EmptyView()
         case .rectangle:
@@ -276,7 +274,7 @@ extension Stepper {
 
 private extension Stepper {
     func onMinimumValueChange(newValue: Double) {
-        if minimumValue < maximumValue {
+        if newValue < maximumValue {
             valueObserver.minimumValue = newValue
             if value < minimumValue {
                 valueObserver.value = minimumValue
