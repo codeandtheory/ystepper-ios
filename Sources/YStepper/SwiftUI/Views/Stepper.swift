@@ -133,7 +133,7 @@ extension Stepper: View {
 
     @ViewBuilder
     func getShape() -> some View {
-        switch appearance.shape {
+        switch appearance.layout.shape {
         case .none:
             EmptyView()
         case .rectangle:
@@ -159,7 +159,7 @@ extension Stepper: View {
 
     @ViewBuilder
     func getShapeWithoutStroke() -> some View {
-        switch appearance.shape {
+        switch appearance.layout.shape {
         case .none:
             EmptyView()
         case .rectangle:
