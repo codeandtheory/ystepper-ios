@@ -29,7 +29,7 @@ public struct Stepper {
         && minimumValue == 0
     }
     
-    /// Receive value change notification
+    /// Receive value change notification.
     public weak var delegate: StepperDelegate?
 
     /// Stepper appearance
@@ -70,7 +70,7 @@ public struct Stepper {
         set { onValueChange(newValue: newValue) }
     }
 
-    /// Decimal digits in current value
+    /// Decimal digits in current value.
     public var decimalPlaces: Int {
         get { valueObserver.decimalValue }
         set { valueObserver.decimalValue = newValue }
@@ -78,11 +78,11 @@ public struct Stepper {
 
     /// Initializes a stepper view.
     /// - Parameters:
-    ///   - appearance: appearance for the stepper. Default is `.default`
-    ///   - minimumValue: minimum value. Default is `0`
-    ///   - maximumValue: maximum value. Default is `100`
-    ///   - stepValue: Step value. Default is `1`
-    ///   - value: Current value. Default is `0` or minimumValue
+    ///   - appearance: appearance for the stepper. Default is `.default`.
+    ///   - minimumValue: minimum value. Default is `0`.
+    ///   - maximumValue: maximum value. Default is `100`.
+    ///   - stepValue: Step value. Default is `1`.
+    ///   - value: Current value. Default is `0` or minimumValue.
     public init(
         appearance: StepperControl.Appearance = .default,
         minimumValue: Double = 0,
@@ -117,7 +117,7 @@ extension Stepper: View {
     @ViewBuilder
     func getIncrementButton() -> some View {
         Button { buttonAction(buttonType: .increment) } label: {
-            getIncrementImage().renderingMode(.template)
+            getIncrementImage()
                 .foregroundColor(
                      Color(appearance.textStyle.textColor).opacity(isIncrementDisabled ? 0.5 : 1)
                 )
@@ -129,7 +129,7 @@ extension Stepper: View {
     @ViewBuilder
     func getDecrementButton() -> some View {
         Button { buttonAction(buttonType: .decrement) } label: {
-            getImageForDecrementButton()?.renderingMode(.template)
+            getImageForDecrementButton()
                 .foregroundColor(
                      Color(appearance.textStyle.textColor).opacity(isDecrementDisabled ? 0.5 : 1)
                 )
@@ -277,7 +277,7 @@ extension Stepper {
         Image(uiImage: appearance.decrementImage)
     }
 
-    func getImageForDecrementButton() -> Image? {
+    func getImageForDecrementButton() -> Image {
         if shouldShowDelete {
             return getDeleteImage()
         }

@@ -9,12 +9,12 @@
 import UIKit
 
 extension StepperControl.Appearance {
-    /// A collection of layout properties for the `StepperControl`
+    /// A collection of layout properties for the `StepperControl`.
     public struct Layout: Equatable {
         /// The content inset from edges. Stepper "content" consists of the two buttons and the text label between them.
         /// Default is `{8, 16, 8, 16}`.
         public var contentInset: NSDirectionalEdgeInsets
-        /// The horizontal spacing between the stepper buttons and label. Default is `8.0`
+        /// The horizontal spacing between the stepper buttons and label. Default is `8.0`.
         public var gap: CGFloat
         /// Stepper's shape
         public var shape: Shape
@@ -24,9 +24,9 @@ extension StepperControl.Appearance {
 
         /// Initializes a `Layout`.
         /// - Parameters:
-        ///   - contentInset: content inset from edges
-        ///   - gap: horizontal spacing between icons and label
-        ///   - shape: Stepper's shape. Default is `.capsule`
+        ///   - contentInset: content inset from edges.
+        ///   - gap: horizontal spacing between icons and label.
+        ///   - shape: Stepper's shape. Default is `.capsule`.
         public init(
             contentInset: NSDirectionalEdgeInsets =
             NSDirectionalEdgeInsets(topAndBottom: 8, leadingAndTrailing: 16),
