@@ -297,6 +297,6 @@ private extension Stepper {
 
 struct Stepper_Previews: PreviewProvider {
     static var previews: some View {
-        Stepper()
+        Stepper(value: 99)
     }
 }
