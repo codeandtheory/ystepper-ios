@@ -43,19 +43,19 @@ public class StepperControl: UIControl {
         get { stepperView.value }
         set { stepperView.value = newValue }
     }
-    /// Decimal places visible in current value
+    /// Decimal places visible in current value.
     public var decimalPlaces: Int {
         get { stepperView.decimalPlaces }
         set { stepperView.decimalPlaces = newValue }
     }
 
-    /// Initializes a stepper control
+    /// Initializes a stepper control.
     /// - Parameters:
-    ///   - appearance: appearance for the stepper. Default is `.default`
-    ///   - minimumValue: minimum value. Default is `0`
-    ///   - maximumValue: maximum value. Default is `100`
-    ///   - stepValue: Step value. Default is `1`
-    ///   - value: Current value. Default is `0` or minimumValue (if provided)
+    ///   - appearance: appearance for the stepper. Default is `.default`.
+    ///   - minimumValue: minimum value. Default is `0`.
+    ///   - maximumValue: maximum value. Default is `100`.
+    ///   - stepValue: Step value. Default is `1`.
+    ///   - value: Current value. Default is `0` or minimumValue (if provided).
     public required init(
         appearance: StepperControl.Appearance = .default,
         minimumValue: Double = 0,

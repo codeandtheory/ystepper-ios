@@ -95,21 +95,24 @@ final class StepperTests: XCTestCase {
 
     func testImagesShouldNotBeNil() {
         let sut = makeSUT(appearance: StepperControl.Appearance(
-            deleteImage: StepperControl.Appearance.defaultDeleteImage
+            deleteImage: nil,
+            incrementImage: nil,
+            decrementImage: nil
         ))
 
         XCTAssertNotNil(sut.getIncrementImage())
         XCTAssertNotNil(sut.getDecrementImage())
         XCTAssertNotNil(sut.getDeleteImage())
+
+        XCTAssertEqual(StepperControl.Appearance.defaultDeleteImage, sut.appearance.deleteImage)
+        XCTAssertEqual(StepperControl.Appearance.defaultDecrementImage, sut.appearance.decrementImage)
+        XCTAssertEqual(StepperControl.Appearance.defaultIncrementImage, sut.appearance.incrementImage)
     }
 
-    func testDeleteImageShouldBeNil() {
-        let sut = makeSUT(appearance: StepperControl.Appearance(deleteImage: nil))
-        XCTAssertNil(sut.getDeleteImage())
-
-        let decrementImage = sut.getDecrementImage()
-
-        XCTAssertEqual(decrementImage, sut.getImageForDecrementButton())
+    func testDecrementImageshouldNotReturnDeleteImage() {
+        let sut = makeSUT(appearance: StepperControl.Appearance(showDeleteImage: false))
+        let decrementImage = sut.getDeleteImage()
+        XCTAssertNotEqual(decrementImage, sut.getImageForDecrementButton())
     }
 
     func testValueGreaterThanMaxValue() {
@@ -123,17 +126,14 @@ final class StepperTests: XCTestCase {
     }
 
     func testImageUpdate() {
-        var sut = makeSUT(appearance: StepperControl.Appearance(deleteImage: StepperControl.Images.decrement.image))
+        var sut = makeSUT(appearance: StepperControl.Appearance(showDeleteImage: false))
         let deleteImage = sut.getDeleteImage()
         let decrementImage = sut.getDecrementImage()
         XCTAssertEqual(sut.value, sut.minimumValue)
         XCTAssertEqual(sut.getImageForDecrementButton(), decrementImage)
 
-        sut.value = sut.stepValue
+        sut.appearance.showDeleteImage = true
         XCTAssertEqual(sut.getImageForDecrementButton(), deleteImage)
-
-        sut.appearance.deleteImage = nil
-        XCTAssertEqual(sut.getImageForDecrementButton(), decrementImage)
     }
 
     func testButtonAction() {
@@ -143,13 +143,6 @@ final class StepperTests: XCTestCase {
         XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
         sut.buttonAction(buttonType: .decrement)
         XCTAssertEqual(sut.value, sut.minimumValue)
-    }
-
-    func testBackgroundNotNil() {
-        let sut = makeSUT()
-        let button = sut.getDecrementButton()
-
-        XCTAssertNotNil(button)
     }
 
     func testShapesNotNil() {
@@ -242,7 +235,7 @@ final class StepperTests: XCTestCase {
         var sut = makeSUT()
         XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.deleteA11yButton.localized)
 
-        sut.appearance.deleteImage = nil
+        sut.appearance.showDeleteImage = false
         XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.decrementA11yButton.localized)
     }
 }

@@ -17,7 +17,19 @@ public struct Stepper {
     @ObservedObject private var appearanceObserver = Stepper.AppearanceObserver()
     @ObservedObject private var valueObserver = Stepper.ValueObserver()
 
-    /// Receive value change notification
+    var isIncrementDisabled: Bool {
+        value >= maximumValue
+    }
+    var isDecrementDisabled: Bool {
+        value <= minimumValue
+    }
+    var shouldShowDelete: Bool {
+        appearance.showDeleteImage
+        && value <= stepValue
+        && minimumValue == 0
+    }
+    
+    /// Receive value change notification.
     public weak var delegate: StepperDelegate?
 
     /// Stepper appearance
@@ -58,7 +70,7 @@ public struct Stepper {
         set { onValueChange(newValue: newValue) }
     }
 
-    /// Decimal digits in current value
+    /// Decimal digits in current value.
     public var decimalPlaces: Int {
         get { valueObserver.decimalValue }
         set { valueObserver.decimalValue = newValue }
@@ -66,11 +78,11 @@ public struct Stepper {
 
     /// Initializes a stepper view.
     /// - Parameters:
-    ///   - appearance: appearance for the stepper. Default is `.default`
-    ///   - minimumValue: minimum value. Default is `0`
-    ///   - maximumValue: maximum value. Default is `100`
-    ///   - stepValue: Step value. Default is `1`
-    ///   - value: Current value. Default is `0` or minimumValue
+    ///   - appearance: appearance for the stepper. Default is `.default`.
+    ///   - minimumValue: minimum value. Default is `0`.
+    ///   - maximumValue: maximum value. Default is `100`.
+    ///   - stepValue: Step value. Default is `1`.
+    ///   - value: Current value. Default is `0` or minimumValue.
     public init(
         appearance: StepperControl.Appearance = .default,
         minimumValue: Double = 0,
@@ -105,17 +117,25 @@ extension Stepper: View {
     @ViewBuilder
     func getIncrementButton() -> some View {
         Button { buttonAction(buttonType: .increment) } label: {
-            getIncrementImage().renderingMode(.template)
+            getIncrementImage()
+                .foregroundColor(
+                     Color(appearance.textStyle.textColor).opacity(isIncrementDisabled ? 0.5 : 1)
+                )
         }
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
+        .disabled(isIncrementDisabled)
     }
 
     @ViewBuilder
     func getDecrementButton() -> some View {
         Button { buttonAction(buttonType: .decrement) } label: {
-            getImageForDecrementButton()?.renderingMode(.template)
+            getImageForDecrementButton()
+                .foregroundColor(
+                     Color(appearance.textStyle.textColor).opacity(isDecrementDisabled ? 0.5 : 1)
+                )
         }
         .accessibilityLabel(getAccessibilityText())
+        .disabled(isDecrementDisabled)
     }
 
     func getTextView() -> some View {
@@ -130,7 +150,7 @@ extension Stepper: View {
         .frame(width: getStringSize(sizeCategory).width)
         .accessibilityLabel(getAccessibilityLabelText())
     }
-
+    
     @ViewBuilder
     func getShape() -> some View {
         switch appearance.layout.shape {
@@ -199,9 +219,7 @@ extension Stepper {
     }
 
     func getAccessibilityText() -> String {
-        if appearance.hasDeleteButton
-            && value <= stepValue
-            && minimumValue == 0 {
+        if shouldShowDelete {
             return StepperControl.Strings.deleteA11yButton.localized
         }
         return StepperControl.Strings.decrementA11yButton.localized
@@ -245,11 +263,8 @@ extension Stepper {
 }
 
 extension Stepper {
-    func getDeleteImage() -> Image? {
-        if let image = appearance.deleteImage {
-            return Image(uiImage: image)
-        }
-        return nil
+    func getDeleteImage() -> Image {
+            Image(uiImage: appearance.deleteImage)
     }
 
     @ViewBuilder
@@ -262,10 +277,8 @@ extension Stepper {
         Image(uiImage: appearance.decrementImage)
     }
 
-    func getImageForDecrementButton() -> Image? {
-        if appearance.hasDeleteButton
-            && value <= stepValue
-            && minimumValue == 0 {
+    func getImageForDecrementButton() -> Image {
+        if shouldShowDelete {
             return getDeleteImage()
         }
         return getDecrementImage()
