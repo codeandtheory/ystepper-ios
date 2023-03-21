@@ -33,18 +33,18 @@ extension StepperControl {
 
         /// Initializer for appearance
         /// - Parameters:
-        ///   - textStyle: Typography and text color for valueText label.
+        ///   - textStyle: Typography and text color for valueText label
         ///   Default is `(UIColor.label, Typography.systemLabel)`
         ///   - foregroundColor: Foreground color for valueText. Default is `.label`
         ///   - backgroundColor: Background color for stepper view. Default is `.systemBackground`
         ///   - borderColor: Border color for stepper view. Default is `UIColor.label`
         ///   - borderWidth: Border width for day view. Default is `1.0`
         ///   - deleteImage: Delete button image. Default is `nil`.
-        ///   Nil means using `Appearance.defaultDeleteImage`
-        ///   - incrementImage: Increment button image. Default is `nil`
-        ///   Nil means using `Appearance.defaultIncrementImage`
-        ///   - decrementImage: Decrement button image. Default is `nil`
-        ///   Nil means using `Appearance.defaultDecrementImage`
+        /// Passing `nil` means to use the default delete image
+        ///   - incrementImage: Increment button image. Default is `nil`.
+        /// Passing `nil` means to use the default increment image
+        ///   - decrementImage: Decrement button image. Default is `nil`.
+        /// Passing `nil` means to use the default decrement image
         ///   - layout: Stepper's layout properties like spacing between views
         ///   - showDeleteImage: Whether to show delete button or not. Default is`true`
 

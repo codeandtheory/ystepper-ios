@@ -20,8 +20,13 @@ public struct Stepper {
     var isIncrementDisabled: Bool {
         value >= maximumValue
     }
-    var isDecrmentDisabled: Bool {
+    var isDecrementDisabled: Bool {
         value <= minimumValue
+    }
+    var shouldShowDelete: Bool {
+        appearance.showDeleteImage
+        && value <= stepValue
+        && minimumValue == 0
     }
     
     /// Receive value change notification
@@ -114,8 +119,7 @@ extension Stepper: View {
         Button { buttonAction(buttonType: .increment) } label: {
             getIncrementImage().renderingMode(.template)
                 .foregroundColor(
-                    isIncrementDisabled ?
-                    Color(appearance.textStyle.textColor).opacity(0.5) : Color(appearance.textStyle.textColor)
+                     Color(appearance.textStyle.textColor).opacity(isIncrementDisabled ? 0.5 : 1)
                 )
         }
         .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
@@ -127,12 +131,11 @@ extension Stepper: View {
         Button { buttonAction(buttonType: .decrement) } label: {
             getImageForDecrementButton()?.renderingMode(.template)
                 .foregroundColor(
-                    isDecrmentDisabled ?
-                    Color(appearance.textStyle.textColor).opacity(0.5) : Color(appearance.textStyle.textColor)
+                     Color(appearance.textStyle.textColor).opacity(isDecrementDisabled ? 0.5 : 1)
                 )
         }
         .accessibilityLabel(getAccessibilityText())
-        .disabled(isDecrmentDisabled)
+        .disabled(isDecrementDisabled)
     }
 
     func getTextView() -> some View {
@@ -216,9 +219,7 @@ extension Stepper {
     }
 
     func getAccessibilityText() -> String {
-        if appearance.showDeleteImage
-            && value <= stepValue
-            && minimumValue == 0 {
+        if shouldShowDelete {
             return StepperControl.Strings.deleteA11yButton.localized
         }
         return StepperControl.Strings.decrementA11yButton.localized
@@ -277,9 +278,7 @@ extension Stepper {
     }
 
     func getImageForDecrementButton() -> Image? {
-        if appearance.showDeleteImage
-            && value <= stepValue
-            && minimumValue == 0 {
+        if shouldShowDelete {
             return getDeleteImage()
         }
         return getDecrementImage()
