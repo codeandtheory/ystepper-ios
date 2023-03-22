@@ -231,12 +231,25 @@ final class StepperTests: XCTestCase {
         XCTAssertNotNil(Stepper_Previews.previews)
     }
 
-    func testAccessibilityActions() {
+    func test_accessibilityIncrement_IncrementsValue() {
+        let sut = makeSUT(maxValue: 2)
+        sut.accessibilityAction(direction: .increment)
+        XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
+
+        sut.accessibilityAction(direction: .increment)
+        XCTAssertEqual(sut.value, sut.minimumValue + 2*sut.stepValue)
+    }
+
+    func test_accessibilityDecrement_decrementsValue() {
         let sut = makeSUT()
         sut.accessibilityAction(direction: .increment)
         XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
 
         sut.accessibilityAction(direction: .decrement)
+        XCTAssertEqual(sut.value, sut.minimumValue)
+
+        sut.accessibilityAction(direction: .decrement)
+        // It should still just be the minimum value
         XCTAssertEqual(sut.value, sut.minimumValue)
     }
 }
