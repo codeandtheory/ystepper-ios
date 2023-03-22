@@ -112,6 +112,11 @@ extension Stepper: View {
             getShape()
                 .background(getShapeWithoutStroke().foregroundColor(Color(appearance.backgroundColor)))
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityValue(getValueText())
+        .accessibilityAdjustableAction { direction in
+            accessibilityAction(direction: direction)
+        }
     }
 
     @ViewBuilder
@@ -122,7 +127,7 @@ extension Stepper: View {
                      Color(appearance.textStyle.textColor).opacity(isIncrementDisabled ? 0.5 : 1)
                 )
         }
-        .accessibilityLabel(StepperControl.Strings.incrementA11yButton.localized)
+        .accessibilityHidden(true)
         .disabled(isIncrementDisabled)
     }
 
@@ -134,7 +139,7 @@ extension Stepper: View {
                      Color(appearance.textStyle.textColor).opacity(isDecrementDisabled ? 0.5 : 1)
                 )
         }
-        .accessibilityLabel(getAccessibilityText())
+        .accessibilityHidden(true)
         .disabled(isDecrementDisabled)
     }
 
@@ -148,7 +153,7 @@ extension Stepper: View {
             label.textColor = appearance.textStyle.textColor
         }
         .frame(width: getStringSize(sizeCategory).width)
-        .accessibilityLabel(getAccessibilityLabelText())
+        .accessibilityHidden(true)
     }
     
     @ViewBuilder
@@ -218,13 +223,6 @@ extension Stepper {
         String(format: "%.\(decimalPlaces)f", value)
     }
 
-    func getAccessibilityText() -> String {
-        if shouldShowDelete {
-            return StepperControl.Strings.deleteA11yButton.localized
-        }
-        return StepperControl.Strings.decrementA11yButton.localized
-    }
-
     func updateCurrentValue(newValue: Double) {
         if newValue < valueObserver.minimumValue {
             valueObserver.value = valueObserver.minimumValue
@@ -257,8 +255,15 @@ extension Stepper {
         )
     }
 
-    func getAccessibilityLabelText() -> String {
-        StepperControl.Strings.valueA11yLabel.localized + getValueText()
+    func accessibilityAction(direction: AccessibilityAdjustmentDirection) {
+        switch direction {
+        case .increment:
+            buttonAction(buttonType: .increment)
+        case .decrement:
+            buttonAction(buttonType: .decrement)
+        @unknown default:
+            break
+        }
     }
 }
 

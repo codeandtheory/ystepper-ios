@@ -231,12 +231,13 @@ final class StepperTests: XCTestCase {
         XCTAssertNotNil(Stepper_Previews.previews)
     }
 
-    func testGetAccessibilityText() {
-        var sut = makeSUT()
-        XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.deleteA11yButton.localized)
+    func testAccessibilityActions() {
+        let sut = makeSUT()
+        sut.accessibilityAction(direction: .increment)
+        XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
 
-        sut.appearance.showDeleteImage = false
-        XCTAssertEqual(sut.getAccessibilityText(), StepperControl.Strings.decrementA11yButton.localized)
+        sut.accessibilityAction(direction: .decrement)
+        XCTAssertEqual(sut.value, sut.minimumValue)
     }
 }
 
