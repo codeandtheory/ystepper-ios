@@ -29,7 +29,7 @@ extension StepperControl {
         /// Stepper's layout properties such as spacing between views. Default is `.default`.
         public var layout: Layout
         /// Whether to show delete image or not.
-        var showDeleteImage: Bool
+        public var showDeleteImage: Bool
 
         /// Initializer for appearance.
         /// - Parameters:
