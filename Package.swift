@@ -5,7 +5,6 @@ import PackageDescription
 
 let package = Package(
     name: "YStepper",
-    defaultLocalization: "en",
     platforms: [
         .iOS(.v14)
     ],
