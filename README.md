@@ -11,9 +11,9 @@ Documentation is automatically generated from source code comments and rendered 
 
 Usage
 ----------
-### `YStepper` (UIKit)
+### `StepperControl` (UIKit)
 
-`YStepper` is a subclass of `UIControl` with an api similar to `UIStepper`.
+`StepperControl` is a subclass of `UIControl` with an api similar to `UIStepper`.
 
 ### `Stepper` (SwiftUI)
 
@@ -21,7 +21,7 @@ Usage
 
 ### Initializers
 
-Both `YStepper` and `Stepper`can be initialized with the same five parameters (`YStepper`uses `Stepper` internally):
+Both `StepperControl` and `Stepper`can be initialized with the same five parameters (`StepperControl`uses `Stepper` internally):
 
 ```swift
 init(
@@ -33,9 +33,9 @@ init(
 )
 ```
 
-The standard initializer lets you specify the appearance, optional minimum and maximum value, step value and current value, although it provides sensible defaults for all of these.
+The standard initializer lets you specify the appearance, minimum, maximum value, step value and current value, although it provides sensible defaults for all of these.
 
-`YStepper` has an additional initializer:
+`StepperControl` has an additional initializer:
 
 ```swift
 init?(coder: NSCoder)
@@ -47,7 +47,7 @@ A stepper created this way begins with the default appearance, but you can custo
 
 ### Customization
 
-`YStepper` and `Stepper` both have an `appearance` property of type `Appearance`.
+`StepperControl` and `Stepper` both have an `appearance` property of type `Appearance`.
 
 `Appearance` lets you customize the stepper’s appearance. You have full control over the colors, typographies, and images used. The default appearance is dark mode compatible and WCAG 2.0 AA compliant for color contrast.
 
@@ -68,7 +68,7 @@ A stepper created this way begins with the default appearance, but you can custo
         public var incrementImage: UIImage
         /// Decrement button image
         public var decrementImage: UIImage
-        /// Stepper's layout properties such as spacing between views. Default is `.default`
+        /// Stepper's layout properties such as spacing between views. Default is `.default`.
         public var layout: Layout
         /// Whether to show delete image or not
         var showDeleteImage: Bool
@@ -83,7 +83,7 @@ Appearance has `layout` property that can be used for customising layout of the 
         /// The content inset from edges. Stepper "content" consists of the two buttons and the text label between them.
         /// Default is `{8, 16, 8, 16}`.
         public var contentInset: NSDirectionalEdgeInsets
-        /// The horizontal spacing between the stepper buttons and label. Default is `8.0`
+        /// The horizontal spacing between the stepper buttons and label. Default is `8.0`.
         public var gap: CGFloat
         /// Stepper's shape
         public var shape: Shape
@@ -93,20 +93,20 @@ Appearance has `layout` property that can be used for customising layout of the 
 }
 ```
 
-Adding to `layout` there is a `shape` property that help decide the shape of `YStepper` and `Stepper`
+In `layout` there is a `shape` property that help decide the shape of `StepperControl` and `Stepper`
 
 ```swift
 /// Stepper's shape.
     public enum Shape: Equatable {
         /// None
         case none
-        /// Rectangle.
+        /// Rectangle
         case rectangle
-        /// Rounded rectangle.
+        /// Rounded rectangle
         case roundRect(cornerRadius: CGFloat)
-        /// Rounded rectangle that scales with Dynamic Type.
+        /// Rounded rectangle that scales with Dynamic Type
         case scaledRoundRect(cornerRadius: CGFloat)
-        /// Capsule.
+        /// Capsule
         case capsule
     }
 ```
@@ -123,9 +123,9 @@ Adding to `layout` there is a `shape` property that help decide the shape of `YS
     
     ```swift
     // Create stepper with default values
-    let stepper = YStepper()
+    let stepper = StepperControl()
     
-    // add stepper to any view
+    // Add stepper to any view
     view.addSubview(stepper)
     ```
     
@@ -133,7 +133,7 @@ Adding to `layout` there is a `shape` property that help decide the shape of `YS
     
     ```swift
     // Create a stepper with current value text color set to green
-    var stepper = YStepper(appearance: StepperControl.Appearance(textStyle: (textColor: .green, typography: .systemLabel)))
+    var stepper = StepperControl(appearance: StepperControl.Appearance(textStyle: (textColor: .green, typography: .systemLabel)))
     
     // Change the text color to red
     stepper.appearance.textStyle.textColor = .red
@@ -142,11 +142,11 @@ Adding to `layout` there is a `shape` property that help decide the shape of `YS
 4. **Update Stepper properties**
     
     ```swift
-    // set minimum value to 10 and maximum value to 101
+    // Set minimum value to 10 and maximum value to 101
     stepper.minimumValue = 10
     stepper.maximumValue = 101
     
-    // Current value to show
+    // Set current value to 15
     stepper.value = 15
     ```
     
@@ -162,15 +162,15 @@ Adding to `layout` there is a `shape` property that help decide the shape of `YS
 
 ### Usage (SwiftUI)
 
-Our stepper also supports Swift UI!
-
 1. **How to import?**
     
     ```swift
     import YStepper
     ```
     
-2. **Create a stepper view** `Stepper` conforms to SwiftUI's `View` protocol so we can directly integrate `Stepper` with any SwiftUI view.
+2.  **Create a stepper view**
+    
+    `Stepper` conforms to SwiftUI's `View` protocol so we can directly integrate `Stepper` with any SwiftUI view.
     
     ```swift
     var body: some View {
@@ -228,12 +228,14 @@ Our stepper also supports Swift UI!
     }
     ```
     
-5. **Receive change notifications** To be notified when the user update the value, you can use the `delegate` property and conform to the `YStepperDelegate` protocol.
+5. **Receive change notifications** 
+    
+    To be notified when the user update the value, you can use the `delegate` property and conform to the `StepperDelegate` protocol.
     
     ```swift
-    extension DemoView: YStepperDelegate {
+    extension DemoView: StepperDelegate {
         // Value was changed
-        func stepperDidChangeValue(to value: Double) {
+        func valueDidChange(newValue: Double) {
             print("New value: \(value)")
         }
     }
