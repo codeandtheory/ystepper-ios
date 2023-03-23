@@ -234,10 +234,12 @@ final class StepperTests: XCTestCase {
     func test_accessibilityIncrement_IncrementsValue() {
         let sut = makeSUT(maxValue: 2)
         sut.accessibilityAction(direction: .increment)
-        XCTAssertEqual(sut.value, sut.minimumValue + sut.stepValue)
-
         sut.accessibilityAction(direction: .increment)
-        XCTAssertEqual(sut.value, sut.minimumValue + 2*sut.stepValue)
+        XCTAssertEqual(sut.value, sut.minimumValue + 2 * sut.stepValue)
+        XCTAssertEqual(sut.value, sut.maximumValue)
+        sut.accessibilityAction(direction: .increment)
+        // It should still just be the maximum value
+        XCTAssertEqual(sut.value, sut.maximumValue)
     }
 
     func test_accessibilityDecrement_decrementsValue() {
