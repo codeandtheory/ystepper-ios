@@ -88,16 +88,6 @@ extension StepperControl {
         case decrement = "minus"
         case delete = "trash"
     }
-    
-    /// Collection of Strings
-    enum Strings: String, Localizable, CaseIterable {
-        case incrementA11yButton = "Increment_Button_A11y_label"
-        case decrementA11yButton = "Decrement_Button_A11y_label"
-        case deleteA11yButton = "Delete_Button_A11y_label"
-        case valueA11yLabel = "Value_A11y_label"
-
-        static var bundle: Bundle { .module }
-    }
 }
 
 extension StepperControl: StepperDelegate {
