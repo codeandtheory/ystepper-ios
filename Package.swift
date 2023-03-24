@@ -19,7 +19,7 @@ let package = Package(
         // For UI layout support, contrast ratio calculations.
         .package(url: "https://github.com/yml-org/YCoreUI.git", from: "1.5.0"),
         // For Typography support
-        .package(url: "https://github.com/yml-org/YMatterType.git", from: "1.4.0")
+        .package(url: "https://github.com/yml-org/YMatterType.git", from: "1.6.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

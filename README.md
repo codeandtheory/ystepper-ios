@@ -71,7 +71,7 @@ A stepper created this way begins with the default appearance, but you can custo
         /// Stepper's layout properties such as spacing between views. Default is `.default`.
         public var layout: Layout
         /// Whether to show delete image or not
-        var showDeleteImage: Bool
+        public var showDeleteImage: Bool
 }
 ```
 
@@ -240,6 +240,11 @@ In `layout` there is a `shape` property that help decide the shape of `StepperCo
         }
     }
     ```
+
+Dependencies
+----------
+
+Y—Stepper depends upon our [Y—CoreUI](https://github.com/yml-org/ycoreui) and [Y—MatterType](https://github.com/yml-org/ymattertype) frameworks (both also open source and Apache 2.0 licensed).
 
 Installation
 ----------
