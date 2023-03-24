@@ -16,7 +16,7 @@ extension StepperControl.Appearance {
         public var contentInset: NSDirectionalEdgeInsets
         /// The horizontal spacing between the stepper buttons and label. Default is `8.0`.
         public var gap: CGFloat
-        /// Stepper's shape
+        /// Stepper's shape. Default is `.capsule`.
         public var shape: Shape
 
         /// Default stepper control layout.

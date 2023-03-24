@@ -11,6 +11,235 @@ Documentation is automatically generated from source code comments and rendered 
 
 Usage
 ----------
+### `StepperControl` (UIKit)
+
+`StepperControl` is a subclass of `UIControl` with an api similar to `UIStepper`.
+
+### `Stepper` (SwiftUI)
+
+`Stepper` is a struct that conforms to the SwiftUI `View` protocol.
+
+### Initializers
+
+Both `StepperControl` and `Stepper`can be initialized with the same five parameters (`StepperControl`uses `Stepper` internally):
+
+```swift
+init(
+    appearance: StepperControl.Appearance = .default,
+    minimumValue: Double = 0,
+    maximumValue: Double = 100,
+    stepValue: Double = 1,
+    value: Double = 0
+)
+```
+
+The standard initializer lets you specify the appearance, minimum value, maximum value, step value and current value, although it provides sensible defaults for all of these.
+
+`StepperControl` has an additional initializer:
+
+```swift
+init?(coder: NSCoder)
+```
+
+For use in Interface Builder or Storyboards (although we recommend that you build your UI in code).
+
+A stepper created this way begins with the default appearance, but you can customize it at runtime by updating its `appearance` property.
+
+### Customization
+
+`StepperControl` and `Stepper` both have an `appearance` property of type `Appearance`.
+
+`Appearance` lets you customize the stepper’s appearance. You have full control over the colors, typographies, and images used. The default appearance is dark mode compatible and WCAG 2.0 AA compliant for color contrast.
+
+```swift
+/// Appearance for stepper that contains typography and color properties
+    public struct Appearance {
+        /// Typography of stepper value label
+        public var textStyle: (textColor: UIColor, typography: Typography)
+        /// Background color for stepper view
+        public var backgroundColor: UIColor
+        /// Border color for stepper view
+        public var borderColor: UIColor
+        /// Border width for stepper view
+        public var borderWidth: CGFloat
+        /// Delete button image
+        public var deleteImage: UIImage
+        /// Increment button image
+        public var incrementImage: UIImage
+        /// Decrement button image
+        public var decrementImage: UIImage
+        /// Stepper's layout properties such as spacing between views. Default is `.default`.
+        public var layout: Layout
+        /// Whether to show delete image or not
+        var showDeleteImage: Bool
+}
+```
+
+Appearance has `layout` property that can be used for customizing layout of the content.
+
+```swift
+/// A collection of layout properties for the `StepperControl`
+    public struct Layout: Equatable {
+        /// The content inset from edges. Stepper "content" consists of the two buttons and the text label between them.
+        /// Default is `{8, 16, 8, 16}`.
+        public var contentInset: NSDirectionalEdgeInsets
+        /// The horizontal spacing between the stepper buttons and label. Default is `8.0`.
+        public var gap: CGFloat
+        /// Stepper's shape. Default is `.capsule`.
+        public var shape: Shape
+
+        /// Default stepper control layout.
+        public static let `default` = Layout()
+}
+```
+
+In `layout` there is a `shape` property that help decide the shape of `StepperControl` and `Stepper`
+
+```swift
+/// Stepper's shape.
+    public enum Shape: Equatable {
+        /// None
+        case none
+        /// Rectangle
+        case rectangle
+        /// Rounded rectangle
+        case roundRect(cornerRadius: CGFloat)
+        /// Rounded rectangle that scales with Dynamic Type
+        case scaledRoundRect(cornerRadius: CGFloat)
+        /// Capsule
+        case capsule
+    }
+```
+
+### Usage (UIKit)
+
+1. **How to import?**
+    
+    ```swift
+    import YStepper
+    ```
+    
+2. **Create a stepper**
+    
+    ```swift
+    // Create stepper with default values
+    let stepper = StepperControl()
+    
+    // Add stepper to any view
+    view.addSubview(stepper)
+    ```
+    
+3. **Customize and then update appearance**
+    
+    ```swift
+    // Create a stepper with current value text color set to green
+    var stepper = StepperControl(appearance: StepperControl.Appearance(textStyle: (textColor: .green, typography: .systemLabel)))
+    
+    // Change the text color to red
+    stepper.appearance.textStyle.textColor = .red
+    ```
+    
+4. **Update Stepper properties**
+    
+    ```swift
+    // Set minimum value to 10 and maximum value to 101
+    stepper.minimumValue = 10
+    stepper.maximumValue = 101
+    
+    // Set current value to 15
+    stepper.value = 15
+    ```
+    
+5. **Receive change notifications**
+    
+    To be notified when the value changes, simply use the target-action mechanism exactly as you would for `UIDatePicker` or `YCalendarPicker`.
+    
+    ```swift
+    // Add target with action
+    stepper.addTarget(self, action: #selector(onValueChange), for: .valueChanged)
+    ```
+    
+
+### Usage (SwiftUI)
+
+1. **How to import?**
+    
+    ```swift
+    import YStepper
+    ```
+    
+2.  **Create a stepper view**
+    
+    `Stepper` conforms to SwiftUI's `View` protocol so we can directly integrate `Stepper` with any SwiftUI view.
+    
+    ```swift
+    var body: some View {
+        Stepper()
+    }
+    ```
+    
+3. **Customize and then update appearance**
+    
+    ```swift
+    struct CustomStepper {
+        @State var stepper: Stepper = {
+            // Create a stepper with text color set to green
+            var stepper = Stepper()
+            stepper.appearance.textStyle.textColor = .green
+            return stepper
+        }()
+    }
+    
+    extension CustomStepper: View {
+        public var body: some View {
+            VStack {
+                stepper
+                Button("Go Red") {
+                    // Change the text color to red
+                    stepper.appearance.textStyle.textColor = .red
+                }
+            }
+        }
+    }
+    ```
+    
+4. **Update Stepper properties**
+    
+    ```swift
+    struct CustomStepper {
+        @State var stepper = Stepper()
+    }
+    
+    extension CustomCalendar: View {
+        var body: some View {
+            VStack {
+                stepper
+                Button("Set Min/Max value") {
+                    // set minimum value to 10 and maximum value to 101
+                    stepper.minimumValue = 10
+                    stepper.maximumValue = 101
+                }
+                Button("Show current value as 15") {
+                    // update value
+                    stepper.value = 15
+                }
+            }
+        }
+    }
+    ```
+    
+5. **Receive change notifications** 
+    
+    To be notified when the user update the value, you can use the `delegate` property and conform to the `StepperDelegate` protocol.
+    
+    ```swift
+    extension DemoView: StepperDelegate {
+        // Value was changed
+        func valueDidChange(newValue: Double) {
+            print("New value: \(value)")
+        }
+    }
+    ```
 
 Installation
 ----------
