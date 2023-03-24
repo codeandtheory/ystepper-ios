@@ -33,7 +33,7 @@ init(
 )
 ```
 
-The standard initializer lets you specify the appearance, minimum, maximum value, step value and current value, although it provides sensible defaults for all of these.
+The standard initializer lets you specify the appearance, minimum value, maximum value, step value and current value, although it provides sensible defaults for all of these.
 
 `StepperControl` has an additional initializer:
 
@@ -75,7 +75,7 @@ A stepper created this way begins with the default appearance, but you can custo
 }
 ```
 
-Appearance has `layout` property that can be used for customising layout of the content.
+Appearance has `layout` property that can be used for customizing layout of the content.
 
 ```swift
 /// A collection of layout properties for the `StepperControl`
@@ -85,7 +85,7 @@ Appearance has `layout` property that can be used for customising layout of the 
         public var contentInset: NSDirectionalEdgeInsets
         /// The horizontal spacing between the stepper buttons and label. Default is `8.0`.
         public var gap: CGFloat
-        /// Stepper's shape
+        /// Stepper's shape. Default is `.capsule`.
         public var shape: Shape
 
         /// Default stepper control layout.
