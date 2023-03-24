@@ -1,4 +1,5 @@
-_Accessible and customizable Stepper user interface elements for iOS._
+![Y—Stepper](https://user-images.githubusercontent.com/1037520/227443013-4bd3b22f-49fa-4f28-bd86-013367a389f4.jpeg)
+_Accessible and customizable shopping cart-style stepper for iOS._
 
 Licensing
 ----------
