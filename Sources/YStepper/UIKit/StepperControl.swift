@@ -103,6 +103,7 @@ private extension StepperControl {
     func addStepperView() {
         stepperView.delegate = self
         let hostController = UIHostingController(rootView: stepperView)
+        hostController.view.backgroundColor = .clear
         addSubview(hostController.view)
         hostController.view.constrainEdges()
     }
