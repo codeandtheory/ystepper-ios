@@ -12,6 +12,7 @@ Documentation is automatically generated from source code comments and rendered 
 
 Usage
 ----------
+![Y-Stepper](https://user-images.githubusercontent.com/111066844/228553022-8fe6aa57-4b7b-4ebf-a6f2-4391ff132406.png)
 ### `StepperControl` (UIKit)
 
 `StepperControl` is a subclass of `UIControl` with an api similar to `UIStepper`.
