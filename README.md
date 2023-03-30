@@ -1,4 +1,5 @@
 ![Y—Stepper](https://user-images.githubusercontent.com/1037520/227443013-4bd3b22f-49fa-4f28-bd86-013367a389f4.jpeg)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fyml-org%2Fystepper-ios%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/yml-org/ystepper-ios) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fyml-org%2Fystepper-ios%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/yml-org/ystepper-ios)  
 _Accessible and customizable shopping cart-style stepper for iOS._
 
 ![YStepper](https://user-images.githubusercontent.com/111066844/228565950-f4a7258f-0f87-48cf-b004-d77bacf81d4b.gif)
