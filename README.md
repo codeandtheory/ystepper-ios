@@ -1,6 +1,8 @@
 ![Y—Stepper](https://user-images.githubusercontent.com/1037520/227443013-4bd3b22f-49fa-4f28-bd86-013367a389f4.jpeg)
 _Accessible and customizable shopping cart-style stepper for iOS._
 
+![YStepper](https://user-images.githubusercontent.com/111066844/228565950-f4a7258f-0f87-48cf-b004-d77bacf81d4b.gif)
+
 Licensing
 ----------
 Y—Stepper is licensed under the [Apache 2.0 license](LICENSE).
@@ -12,6 +14,7 @@ Documentation is automatically generated from source code comments and rendered 
 
 Usage
 ----------
+![Y-Stepper](https://user-images.githubusercontent.com/111066844/228553022-8fe6aa57-4b7b-4ebf-a6f2-4391ff132406.png)
 ### `StepperControl` (UIKit)
 
 `StepperControl` is a subclass of `UIControl` with an api similar to `UIStepper`.
