@@ -87,6 +87,8 @@ extension StepperControl {
         case increment = "plus"
         case decrement = "minus"
         case delete = "trash"
+
+        public static var renderingMode: UIImage.RenderingMode { .alwaysTemplate }
     }
 }
 

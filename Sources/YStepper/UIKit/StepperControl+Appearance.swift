@@ -77,9 +77,9 @@ extension StepperControl.Appearance {
     ///  Default stepper appearance
     public static let `default` = StepperControl.Appearance()
     /// Default image for delete button. Is a `trash` from SF Symbols in template rendering mode.
-    public static let defaultDeleteImage = StepperControl.Images.delete.image.withRenderingMode(.alwaysTemplate)
+    public static let defaultDeleteImage = StepperControl.Images.delete.image
     /// Default image for increment button. Is a `plus` from SF Symbols in template rendering mode.
-    public static let defaultIncrementImage = StepperControl.Images.increment.image.withRenderingMode(.alwaysTemplate)
+    public static let defaultIncrementImage = StepperControl.Images.increment.image
     /// Default image for decrement button. Is a `minus` from SF Symbols in template rendering mode.
-    public static let defaultDecrementImage = StepperControl.Images.decrement.image.withRenderingMode(.alwaysTemplate)
+    public static let defaultDecrementImage = StepperControl.Images.decrement.image
 }
