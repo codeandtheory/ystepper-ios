@@ -29,6 +29,12 @@ final class StepperControlTests: XCTestCase {
         XCTAssertEqual(sut.appearance.incrementImage, defaultAppearance.incrementImage)
     }
 
+    func test_renderMode_deliversCorrectMode() {
+        StepperControl.Images.allCases.forEach {
+            XCTAssertEqual($0.image.renderingMode, .alwaysTemplate)
+        }
+    }
+
     func testCustomeAppearance() {
         let customeAppearance = StepperControl.Appearance(textStyle: (textColor: .red, typography: .systemButton))
         let sut = makeSUT(appearance: customeAppearance)
