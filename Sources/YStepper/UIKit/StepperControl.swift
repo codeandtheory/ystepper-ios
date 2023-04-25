@@ -11,7 +11,8 @@ import YCoreUI
 import SwiftUI
 
 /// A UIKit stepper control.
-public class StepperControl: UIControl {
+@objcMembers
+open class StepperControl: UIControl {
     var stepperView: Stepper
 
     /// Stepper appearance
@@ -74,7 +75,7 @@ public class StepperControl: UIControl {
         addStepperView()
     }
 
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         stepperView = Stepper()
         super.init(coder: coder)
         addStepperView()

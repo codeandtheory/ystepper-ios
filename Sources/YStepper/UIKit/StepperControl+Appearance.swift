@@ -11,7 +11,8 @@ import YMatterType
 
 extension StepperControl {
     /// Appearance for stepper that contains typography and color properties.
-    public struct Appearance {
+    @objcMembers
+    public class Appearance: NSObject {
         /// Typography of stepper value label.
         public var textStyle: (textColor: UIColor, typography: Typography)
         /// Background color for stepper view.
