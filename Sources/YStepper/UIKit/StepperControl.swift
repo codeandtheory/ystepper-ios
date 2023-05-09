@@ -75,6 +75,7 @@ open class StepperControl: UIControl {
         addStepperView()
     }
 
+    /// :nodoc:
     public required init?(coder: NSCoder) {
         stepperView = Stepper()
         super.init(coder: coder)
